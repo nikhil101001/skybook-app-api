@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv").config();
 
 const app = express();
 const port = 3000;
@@ -15,7 +14,8 @@ async function mongooseConnect() {
   if (mongoose.connection.readyState === 1) {
     return mongoose.connection.asPromise();
   } else {
-    const uri = process.env.MONGO_URI;
+    const uri =
+      "mongodb+srv://nikhil1010010001:M3LZ04IkSkijzFge@skybooks.nnx4f8a.mongodb.net/";
     return mongoose.connect(uri);
   }
 }
