@@ -10,12 +10,12 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-async function mongooseConnect() {
+function mongooseConnect() {
   if (mongoose.connection.readyState === 1) {
     return mongoose.connection.asPromise();
   } else {
     const uri =
-      "mongodb+srv://nikhil1010010001:M3LZ04IkSkijzFge@skybooks.nnx4f8a.mongodb.net/";
+      "mongodb+srv://nikhil1010010001:M3LZ04IkSkijzFge@skybooks.nnx4f8a.mongodb.net/SkyBooks";
     return mongoose.connect(uri);
   }
 }
