@@ -9,6 +9,7 @@ const BooksSchema = new mongoose.Schema(
     author: { type: String, required: true },
     uri: { type: String, required: true },
     grade: { type: String, required: true },
+    slug: { type: String, required: true, unique: true },
   },
   { timestamps: true }
 );
