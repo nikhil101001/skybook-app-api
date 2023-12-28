@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const { MongoClient } = require("mongodb");
 require("dotenv").config();
 
 const app = express();
@@ -12,55 +11,14 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// function mongooseConnect() {
-//   if (mongoose.connection.readyState === 1) {
-//     return mongoose.connection.asPromise();
-//   } else {
-//     const uri =
-//       "mongodb+srv://nikhil1010010001:M3LZ04IkSkijzFge@skybooks.nnx4f8a.mongodb.net/SkyBooks";
-//     return mongoose.connect(uri);
-//   }
-// }
-
-const MONGO_URI = process.env.MONGO_URI;
-
-if (!MONGO_URI) {
-  throw new Error(
-    "Please define the MONGODB_URI environment variable inside .env.local"
-  );
+function mongooseConnect() {
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection.asPromise();
+  } else {
+    const uri = process.env.MONGO_URI;
+    return mongoose.connect(uri);
+  }
 }
-
-let cached = global.mongoose;
-
-if (!cached) {
-  cached = global.mongoose = { con: null, promise: null };
-}
-
-const mongooseConnect = async () => {
-  if (cached.conn) {
-    return cached.conn;
-  }
-
-  // If a connection does not exist, we check if a promise is already in progress. If a promise is already in progress, we wait for it to resolve to get the connection
-  if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-    };
-
-    cached.promise = mongoose.connect(MONGO_URI, opts).then((mongoose) => {
-      return mongoose;
-    });
-  }
-
-  try {
-    cached.conn = await cached.promise;
-  } catch (e) {
-    cached.promise = null;
-    throw e;
-  }
-
-  return cached.conn;
-};
 
 mongooseConnect()
   .then(() => {
@@ -70,6 +28,7 @@ mongooseConnect()
     console.log("Error Connecting to MongoDB");
   });
 
+// running server
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
 });
