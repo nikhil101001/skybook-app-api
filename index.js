@@ -44,7 +44,7 @@ app.get("/get-grades", async (req, res) => {
 
     res.status(200).json(grade);
   } catch (error) {
-    res.status(500).json({ message: "Error getting grades!" });
+    res.status(500).json({ error: "Error getting grades!" });
   }
 });
 
@@ -115,7 +115,7 @@ app.get("/get-books", async (req, res) => {
 
     res.status(200).json(books);
   } catch (error) {
-    res.status(500).json({ message: "Error getting books!" });
+    res.status(500).json({ error: "Error getting books!" });
   }
 });
 
@@ -196,7 +196,7 @@ app.get("/get-users", async (req, res) => {
 
     res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ message: "Error getting users" });
+    res.status(500).json({ error: "Error getting users" });
   }
 });
 
@@ -210,10 +210,10 @@ app.get("/get-user/:email", async (req, res) => {
     if (user) {
       return res.status(200).json(user);
     } else {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ error: "User not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: "Error getting user" });
+    res.status(500).json({ error: "Error getting user" });
   }
 });
 
