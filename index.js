@@ -203,7 +203,6 @@ app.get("/get-users", async (req, res) => {
 // get user by email
 app.get("/get-user/:email", async (req, res) => {
   const { email } = req.params;
-  console.log(email);
   try {
     const user = await User.findOne({ email });
 
